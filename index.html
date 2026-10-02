@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The page may load code and data only from itself, and map pictures only from OpenStreetMap.
+       Leaflet positions tiles with inline style attributes, hence 'unsafe-inline' for styles only. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- A study project: search engines are asked not to list it. -->
+  <meta name="robots" content="noindex">
+  <title>Рецепты по калориям — Бишкек</title>
+  <meta name="description" content="Блюда не больше заданной калорийности и продуктовые магазины Бишкека рядом.">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="layout">
+    <main class="panel">
+      <section aria-labelledby="dishes-heading">
+        <h1 id="dishes-heading">Блюда</h1>
+        <label class="field" for="kcal-limit">
+          <span>Не&nbsp;больше, ккал на&nbsp;порцию</span>
+          <input id="kcal-limit" type="number" inputmode="numeric" min="1" max="5000" step="1" value="500" autocomplete="off">
+        </label>
+        <div id="category-filter" class="chips" role="group" aria-label="Раздел"></div>
+        <p id="kcal-message" class="message" role="status" aria-live="polite"></p>
+        <ul id="dish-list" class="dish-list"></ul>
+      </section>
+
+      <section id="dish-details" class="details" aria-live="polite" hidden></section>
+
+      <section aria-labelledby="stores-heading">
+        <h2 id="stores-heading">Магазины рядом</h2>
+        <button id="locate" class="button" type="button">Определить, где&nbsp;я</button>
+        <label class="check"><input id="only-supermarkets" type="checkbox"> Только супермаркеты</label>
+        <p id="locate-message" class="message" role="status" aria-live="polite">Или щёлкните по&nbsp;карте в&nbsp;том месте, где вы находитесь.</p>
+        <ol id="store-list" class="store-list"></ol>
+      </section>
+
+      <footer class="notes">
+        <p>Калории посчитаны по&nbsp;таблице USDA FoodData Central. Рецепты&nbsp;— Викиучебник; их изложение на&nbsp;этой странице распространяется на&nbsp;тех&nbsp;же условиях, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" target="_blank" rel="noopener">CC&nbsp;BY-SA&nbsp;4.0</a>. Магазины&nbsp;— ©&nbsp;участники OpenStreetMap, <span id="stores-date"></span>.</p>
+        <p>Калорийность приблизительная: это учебный проект, а&nbsp;не&nbsp;медицинская рекомендация.</p>
+        <p>Ваше местоположение эта страница никуда не&nbsp;отправляет и&nbsp;не&nbsp;сохраняет. Картинки карты подгружаются с&nbsp;серверов OpenStreetMap, поэтому они видят, какой участок карты вы смотрите.</p>
+      </footer>
+    </main>
+
+    <div id="map" class="map" role="region" aria-label="Карта магазинов"></div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

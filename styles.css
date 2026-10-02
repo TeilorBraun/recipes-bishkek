@@ -1,0 +1,400 @@
+/* Tokens first: every colour, size and gap below comes from here. */
+:root {
+  --bg: #ffffff;
+  --surface: #f4f5f6;
+  --ink: #1b1d1f;
+  --muted: #5b6168;
+  --line: #c9cdd2;
+  /* Green marks a shop whose catalogue can be read online; grey marks "an option, assortment unknown". */
+  --known: #0b6b3a;
+  --unknown: #6b7178;
+  --you: #1d4ed8;
+  --warn: #8a4b00;
+  --on-accent: #ffffff;
+
+  --sans: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --text-s: 0.875rem;
+  --text-m: 1rem;
+  --text-l: 1.25rem;
+  --text-xl: 1.5rem;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --panel-width: 24rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--text-m);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: var(--text-l);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* Layout: list on the left, map on the right; stacked on a phone. */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-3) var(--space-2) var(--space-4);
+}
+
+.panel section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.map {
+  height: 60vh;
+  min-height: 20rem;
+  border-top: 1px solid var(--line);
+}
+
+/* On a phone the map comes right after the shop list, and the source notes go last. */
+@media (max-width: 899px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-3);
+  }
+
+  .panel {
+    display: contents;
+  }
+
+  .panel > section,
+  .panel > footer {
+    margin: 0 var(--space-2);
+  }
+
+  .map {
+    order: 1;
+  }
+
+  .notes {
+    order: 2;
+    padding-bottom: var(--space-4);
+  }
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: var(--panel-width) 1fr;
+    height: 100vh;
+  }
+
+  .panel {
+    overflow-y: auto;
+    padding: var(--space-3);
+    border-right: 1px solid var(--line);
+  }
+
+  .map {
+    height: 100vh;
+    border-top: 0;
+  }
+}
+
+/* Controls */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-s);
+  color: var(--muted);
+}
+
+.field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-l);
+  font-variant-numeric: tabular-nums;
+}
+
+.button {
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--you);
+  border-radius: var(--radius-control);
+  background: var(--you);
+  color: var(--on-accent);
+  font: inherit;
+  cursor: pointer;
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+.button:hover {
+  opacity: 0.88;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.field input:focus-visible,
+.chip:focus-visible,
+.check input:focus-visible,
+.button:focus-visible,
+.dish:focus-visible,
+.store:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--you);
+  outline-offset: 2px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-s);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+
+.chip:hover {
+  background: var(--surface);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-accent);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.check input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--you);
+}
+
+.message {
+  font-size: var(--text-s);
+  color: var(--muted);
+}
+
+.message:empty {
+  display: none;
+}
+
+.message.is-problem {
+  color: var(--warn);
+}
+
+/* Dish and store rows share one shape: a full-width button with a figure on the right. */
+.dish-list,
+.store-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.dish,
+.store {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 var(--space-2);
+  align-items: baseline;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+
+.dish:hover,
+.store:hover {
+  background: var(--surface);
+}
+
+.dish[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--surface);
+}
+
+.row-figure {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.row-note {
+  grid-column: 1 / -1;
+  font-size: var(--text-s);
+  color: var(--muted);
+}
+
+.store .row-note.is-known {
+  color: var(--known);
+}
+
+/* Dish details */
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.details[hidden] {
+  display: none;
+}
+
+.ingredients {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ingredients th,
+.ingredients td {
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.ingredients th {
+  font-size: var(--text-s);
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.ingredients .number {
+  padding-left: var(--space-2);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.details-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-s);
+  color: var(--muted);
+}
+
+.details a,
+.notes a,
+.popup a {
+  color: var(--you);
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-s);
+  color: var(--muted);
+}
+
+.popup {
+  font-family: var(--sans);
+  font-size: var(--text-s);
+  line-height: 1.4;
+}
+
+.popup strong {
+  display: block;
+  font-size: var(--text-m);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .button,
+  .dish,
+  .store {
+    transition: none;
+  }
+}
